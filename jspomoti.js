@@ -1,5 +1,4 @@
 function init(){
-	Item_first = document.querySelectorAll("#content-show div")[0];
 	importtime = document.getElementById("importtime");
 	hour = 0;
 	sec = 0;
@@ -83,10 +82,6 @@ function itemViewPomodo(minuteview, secminute, iditem){
 	i_icon_pause_play.className = "material-icons";
 	i_icon_pause_play.innerHTML = "play_arrow";
 
-	//i_icon_pause = document.createElement("i");
-	//i_icon_pause.className = "material-icons";
-	//i_icon_pause.innerHTML = "pause";
-
 	i_icon_replay = document.createElement("i");
 	i_icon_replay.className = "material-icons";
 	i_icon_replay.innerHTML = "replay";
@@ -104,13 +99,8 @@ function itemViewPomodo(minuteview, secminute, iditem){
 
 	//Clear Item
 	i_icon_clear.addEventListener("click", function(){
-		clearItem(iditem);
+		clearItem(iditem, clearclick = 2);
 	})
-
-	//pause and play
-	//i_icon_pause_play.addEventListener("click", function(){
-		//pauseAndPlay(iditem);
-	//})
 }
 
 function setItem(){
@@ -121,13 +111,24 @@ function setItem(){
 	}
 }
 
-function clearItem(iditem){
-	parent_content_show.removeChild(document.getElementById(iditem));
-	clearInterval(startTime);
-	sec = 0; //reset sec;
-	startItemTime();
-
-
+function clearItem(iditem, clearclick){
+	//if iditem == 
+	if(clearclick == 0){
+		clearInterval(startTime);
+		sec = 0;
+		startItemTime()
+	}
+	else if(clearclick == 1){
+		clearInterval(startTime);
+		parent_content_show.removeChild(document.getElementById(iditem));
+		sec = 0; //reset sec;
+	}
+	else if(clearclick == 2){
+		parent_content_show.removeChild(document.getElementById(iditem));
+	}
+	else{
+		alert("Thong bao loi");
+	}
 }
 
 function pauseAndPlay(node_pause_play){
@@ -149,8 +150,7 @@ function runTime(){
 	Item_first.childNodes[0].innerHTML = minute;
 	Item_first.childNodes[2].innerHTML = sec;
 	if((sec == 0) && (minute == 0)){
-		clearInterval(startTime);
-		clearItem(Item_first.id);
+		clearItem(Item_first.id, clearclick = 1);
 		startItemTime();
 	}
 }
@@ -173,8 +173,13 @@ function startItemTime(){
 			pauseAndPlay(node_pause_play)
 		})
 
-		startTime = setInterval(runTime, 1000);
+		//Clear item first
+		var node_clear_item = Item_first.childNodes[4];
+		node_clear_item.addEventListener("click", function(){
+			clearItem(Item_first.id, clearclick = 0);
+		})
 
+		startTime = setInterval(runTime, 1000);
 	}
 }
 
