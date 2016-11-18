@@ -135,7 +135,7 @@ function pauseAndPlay(node_pause_play){
 	if(node_pause_play.innerHTML == "play_arrow")
 	{
 		node_pause_play.innerHTML = "pause";
-		startItemTime();
+		startTime = setInterval(runTime, 1000);
 	}
 	else
 	{
@@ -182,6 +182,16 @@ function startItemTime(){
 		})
 
 		//Node replay
+		var replay_minute = minute;
+		var node_replay = Item_first.childNodes[6];
+		node_replay.addEventListener("click", function(){
+			clearInterval(startTime);
+			minute = replay_minute;
+			sec = 0;
+			startTime = setInterval(runTime, 1000);
+			node_pause_play.innerHTML = "pause";
+		})
+		
 		startTime = setInterval(runTime, 1000);
 	}
 }
