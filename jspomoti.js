@@ -159,6 +159,8 @@ function startItemTime(){
 	Item_first = document.querySelectorAll("#content-show div")[0];
 
 	if (Item_first){
+		//css - opacity
+		Item_first.style.opacity = "1";
 
 		//get minute item time
 		var viewminute = Item_first.childNodes[0].innerHTML;
@@ -166,19 +168,20 @@ function startItemTime(){
 		// Element span class = "minute" - View minute, sec;
 		minute = parseInt(viewminute);
 
-		//Pause - play
+		//Node Clear item first
+		var node_clear_item = Item_first.childNodes[4];
+		node_clear_item.addEventListener("click", function(){
+			clearItem(Item_first.id, clearclick = 0);
+		})
+
+		//Node Pause - play
 		var node_pause_play = Item_first.childNodes[5];
 		node_pause_play.innerHTML = "pause";
 		node_pause_play.addEventListener("click", function(){
 			pauseAndPlay(node_pause_play)
 		})
 
-		//Clear item first
-		var node_clear_item = Item_first.childNodes[4];
-		node_clear_item.addEventListener("click", function(){
-			clearItem(Item_first.id, clearclick = 0);
-		})
-
+		//Node replay
 		startTime = setInterval(runTime, 1000);
 	}
 }
